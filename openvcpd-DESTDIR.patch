@@ -1,0 +1,31 @@
+--- openvcpd-0.3-rc2/Makefile.in~	2007-09-04 21:08:06.000000000 +0200
++++ openvcpd-0.3-rc2/Makefile.in	2007-09-22 01:26:38.000000000 +0200
+@@ -38,20 +38,14 @@
+ 	@rm -f parse_ipfmlogs
+ 
+ install:
+-	mkdir -p $(datadir)/openvcpd
+-	cp openvcpd $(bindir)/openvcpd
+-	cp parse_ipfmlogs $(bindir)/parse_ipfmlogs
+-
+-	@if (test -e $(sysconfdir)/openvcpd.conf); then \
+-		echo "Configuration File exists. Please check for updates of the configurationfile"; \
+-	else	\
+-                cfgdir=`vserver-info 2>&1 | grep 'cfg-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`; \
+-                rootdir=`vserver-info 2>&1 | grep 'vserver-Rootdir:' | awk -F: '{ print $$2 }' | cut -c2-`; \
+-                rundir=`vserver-info 2>&1 | grep 'pkgstate-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`; \
+-                echo "CONF: $$cfgdir, $$rootdir, $$rundir"; \
+-                cat openvcpd.conf | sed s#'CONFIGDIR'#$$cfgdir# | sed s#'ROOTDIR'#$$rootdir# | sed s#'RUNDIR'#$$rundir# > $(sysconfdir)/openvcpd.conf; \
+-		echo "Configuration File created ($(sysconfdir)/openvcpd.conf)"; \
+-	fi \
++	mkdir -p $(DESTDIR)$(datadir)/openvcpd
++	cp openvcpd $(DESTDIR)$(bindir)/openvcpd
++	cp parse_ipfmlogs $(DESTDIR)$(bindir)/parse_ipfmlogs
++	cfgdir=`vserver-info 2>&1 | grep 'cfg-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`;
++	rootdir=`vserver-info 2>&1 | grep 'vserver-Rootdir:' | awk -F: '{ print $$2 }' | cut -c2-`;
++	rundir=`vserver-info 2>&1 | grep 'pkgstate-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`;
++	echo "CONF: $$cfgdir, $$rootdir, $$rundir";
++	cat openvcpd.conf | sed s#'CONFIGDIR'#$$cfgdir# | sed s#'ROOTDIR'#$$rootdir# | sed s#'RUNDIR'#$$rundir# > $(DESTDIR)$(sysconfdir)/openvcpd.conf;
+ 
+ uninstall:
+ 	rm -rf $(datadir)/openvcpd
