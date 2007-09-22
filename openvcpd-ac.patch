@@ -33,3 +33,18 @@
  
  AC_CONFIG_FILES([Makefile])
  AC_OUTPUT
+--- openvcpd-0.3-rc2/Makefile.in~	2007-09-22 22:32:36.879983779 +0200
++++ openvcpd-0.3-rc2/Makefile.in	2007-09-22 22:37:31.549731799 +0200
+@@ -2,10 +2,11 @@
+ bindir = @bindir@
+ datadir = @datadir@
+ sysconfdir = @sysconfdir@
++sharedstatedir = @sharedstatedir@
+ iptablever=`iptables -V |  awk  '{ print $$2 }' | cut -c2-`
+ 
+ CC=@CC@
+-CFLAGS=@CFLAGS@ @DEFS@ -DOPENVCP_CONFIG=\"$(sysconfdir)/openvcpd.conf\" -DOPENVCP_DATA=\"$(datadir)/openvcpd\" -DIPTABLES_VERSION=\"$(iptablever)\" -Ilib/ -Isrc/ -rdynamic
++CFLAGS=@CFLAGS@ @DEFS@ -DOPENVCP_CONFIG=\"$(sysconfdir)/openvcpd.conf\" -DOPENVCP_DATA=\"$(sharedstatedir)/openvcpd\" -DIPTABLES_VERSION=\"$(iptablever)\" -Ilib/ -Isrc/ -rdynamic
+ LDFLAGS=@LDFLAGS@
+ LIBS=@LIBS@
+ 
