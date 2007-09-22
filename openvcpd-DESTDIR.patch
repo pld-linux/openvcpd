@@ -21,10 +21,10 @@
 +	mkdir -p $(DESTDIR)$(datadir)/openvcpd
 +	cp openvcpd $(DESTDIR)$(bindir)/openvcpd
 +	cp parse_ipfmlogs $(DESTDIR)$(bindir)/parse_ipfmlogs
-+	cfgdir=`vserver-info 2>&1 | grep 'cfg-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`;
-+	rootdir=`vserver-info 2>&1 | grep 'vserver-Rootdir:' | awk -F: '{ print $$2 }' | cut -c2-`;
-+	rundir=`vserver-info 2>&1 | grep 'pkgstate-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`;
-+	echo "CONF: $$cfgdir, $$rootdir, $$rundir";
++	cfgdir=`vserver-info 2>&1 | grep 'cfg-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`; \
++	rootdir=`vserver-info 2>&1 | grep 'vserver-Rootdir:' | awk -F: '{ print $$2 }' | cut -c2-`; \
++	rundir=`vserver-info 2>&1 | grep 'pkgstate-Directory:' | awk -F: '{ print $$2 }' | cut -c2-`; \
++	echo "CONF: $$cfgdir, $$rootdir, $$rundir"; \
 +	cat openvcpd.conf | sed s#'CONFIGDIR'#$$cfgdir# | sed s#'ROOTDIR'#$$rootdir# | sed s#'RUNDIR'#$$rundir# > $(DESTDIR)$(sysconfdir)/openvcpd.conf;
  
  uninstall:
