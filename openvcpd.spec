@@ -14,11 +14,12 @@ URL:		http://www.openvcp.org/
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
 BuildRequires:	autoconf
-BuildRequires:	util-vserver-devel
-BuildRequires:	sqlite3-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	libpcap-devel
+BuildRequires:	gnutls-devel
 BuildRequires:	iptables-devel >= 1.3.8-1.2
+BuildRequires:	libpcap-devel
+BuildRequires:	libxml2-devel
+BuildRequires:	sqlite3-devel
+BuildRequires:	util-vserver-devel
 #Requires:	-
 #Provides:	group(foo)
 #Provides:	user(foo)
@@ -34,7 +35,10 @@ VServer Control Panel Daemon.
 
 %build
 %{__autoconf}
-%configure
+%configure \
+	--with-gnutls \
+	--with-ipv6
+
 %{__make}
 
 %install
