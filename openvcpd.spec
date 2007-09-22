@@ -20,9 +20,6 @@ BuildRequires:	libpcap-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	util-vserver-devel
-#Requires:	-
-#Provides:	group(foo)
-#Provides:	user(foo)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
