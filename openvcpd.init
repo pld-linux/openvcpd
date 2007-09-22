@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# openvcpd	Start/Stop VServer Control Panel Daemon
+#
+# chkconfig:	345 99 01
+#
+# description:	VServer Control Panel Daemon
+# processname:	openvcpd
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config
+[ -f /etc/sysconfig/openvcpd ] && . /etc/sysconfig/openvcpd
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
+		msg_network_down openvcpd
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+start() {
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/openvcpd ]; then
+		msg_starting openvcpd
+		daemon openvcpd
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/openvcpd
+	else
+		msg_already_running openvcpd
+	fi
+}
+
+stop() {
+	if [ -f /var/lock/subsys/openvcpd ]; then
+		msg_stopping openvcpd
+		killproc openvcpd
+		rm -f /var/lock/subsys/openvcpd
+	else
+		msg_not_running openvcpd
+	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart|force-reload)
+	stop
+	start
+	;;
+  status)
+	status openvcpd
+	exit $?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
