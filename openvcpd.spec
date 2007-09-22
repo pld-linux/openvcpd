@@ -18,12 +18,8 @@ BuildRequires:	util-vserver-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libpcap-devel
-BuildRequires:	iptables-devel >= 1.3.8-1.1
-#Requires(postun):	-
-#Requires(pre,post):	-
-#Requires(preun):	-
+BuildRequires:	iptables-devel >= 1.3.8-1.2
 #Requires:	-
-#Provides:	-
 #Provides:	group(foo)
 #Provides:	user(foo)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
