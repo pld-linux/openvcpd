@@ -1,3 +1,7 @@
+#
+# TODO:
+#	- fix killing processes in init script (only 1 of 2 is killed)
+#
 Summary:	VServer Control Panel Daemon
 Name:		openvcpd
 Version:	0.3
