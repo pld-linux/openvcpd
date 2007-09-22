@@ -1,7 +1,7 @@
 Summary:	VServer Control Panel Daemon
 Name:		openvcpd
 Version:	0.3
-Release:	0.1
+Release:	0.7
 License:	GPL
 Group:		Applications/System
 Source0:	http://files.openvcp.org/%{name}-%{version}.tar.gz
@@ -32,6 +32,8 @@ VServer Control Panel Daemon.
 
 %build
 %{__autoconf}
+CFLAGS="%{rpmcflags} -DIPTABLES_LIB_DIR=\\\"%{_libdir}/iptables\\\""
+export CFLAGS
 %configure \
 	--with-gnutls \
 	--with-ipv6
@@ -40,7 +42,8 @@ VServer Control Panel Daemon.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{rc.d/init.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{rc.d/init.d,sysconfig}} \
+	$RPM_BUILD_ROOT{%{_sharedstatedir}/%{name},/vservers/{backups,images}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -65,6 +68,9 @@ fi
 %defattr(644,root,root,755)
 %doc AUTHORS README
 %attr(755,root,root) %{_bindir}/*
-%attr(754,root,root) /etc/%{name}.conf
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
+%config(noreplace) %verify(not md5 mtime size) /etc/%{name}.conf
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
+%dir /vservers/backups
+%dir /vservers/images
+%dir %{_sharedstatedir}/%{name}
