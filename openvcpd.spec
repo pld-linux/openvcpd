@@ -2,15 +2,16 @@
 # TODO:
 #	- fix killing processes in init script (only 1 of 2 is killed)
 #
+%define		rc_ver	rc2
 Summary:	VServer Control Panel Daemon
 Summary(pl.UTF-8):	VServer Control Panel Daemon - demon panelu do administrowania VServerami
 Name:		openvcpd
-Version:	0.3
-Release:	0.7
+Version:	0.4
+Release:	0.%{rc_ver}.1
 License:	GPL
 Group:		Applications/System
-Source0:	http://files.openvcp.org/%{name}-%{version}.tar.gz
-# Source0-md5:	2445db39d0728b8169cfb8246b435f30
+Source0:	http://files.openvcp.org/%{name}-%{version}%{rc_ver}.tar.gz
+# Source0-md5:	7fee9990f8c9d175eabb19fab376defe
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-ac.patch
@@ -35,9 +36,9 @@ VServer Control Panel Daemon - demon panelu do administrowania
 VServerami.
 
 %prep
-%setup -q -n %{name}-%{version}-rc2
+%setup -q -n %{name}-%{version}%{rc_ver}
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 %build
 %{__autoconf}
